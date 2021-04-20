@@ -1,9 +1,52 @@
-﻿@{
-    ViewData["Title"] = "Index";
-}
+﻿@{ ViewData["Title"] = "Index"; }
 
-<h2>IEX Trading Application</h2>
+<h2>Do Not Call Complaints Application</h2>
 <hr />
+
+<!-- Page content -->
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
+
+    <!-- Automatic Slideshow Images -->
+
+    <div class="mySlides w3-display-container w3-center">
+        <img src="img/robo3.jpg" style="width:35%" height="400px">
+        <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+
+        </div>
+    </div>
+
+    <div class="mySlides w3-display-container w3-center">
+        <img src="img/DONOTCALL.jpeg" style="width:35%" height="400px">
+        <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+
+        </div>
+    </div>
+
+    <div class="mySlides w3-display-container w3-center">
+        <img src="img/robo1.jpeg" style="width:35%" height="400px">
+        <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+
+        </div>
+    </div>
+    <div class="mySlides w3-display-container w3-center">
+        <img src="img/robo2.jpeg" style="width:35%" height="400px">
+        <div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">
+
+        </div>
+    </div>
+
+    <div class="w3-container w3-content w3-center w3-padding-64" style="width:35%" id="band">
+        <div class="space">  </div>
+        <h2>Robo calling</h2>
+        <p> A robocall is a recorded message delivered in the form of a telephone call. The caller is not a real person, but a machine, and the system uses automatic dialing to reach your number. Most robocallers use real people to record the messages, so hearing a bot voice on the other end of the line is rare.</p>
+
+    </div>
+
+</div>
+
+
+
+
 
 <div>
     <p>
@@ -29,3 +72,30 @@
         </ul>
     </p>
 </div>
+
+<script>
+    // Automatic Slideshow - change image every 4 seconds
+    var myIndex = 0;
+    carousel();
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) { myIndex = 1 }
+        x[myIndex - 1].style.display = "block";
+        setTimeout(carousel, 4000);
+    }
+
+    // Used to toggle the menu on small screens when clicking on the menu button
+    function myFunction() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }</script>

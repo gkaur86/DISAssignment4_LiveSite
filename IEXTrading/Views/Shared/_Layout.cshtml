@@ -3,26 +3,44 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TradingApp</title>
-    <link rel="stylesheet" href="~/css/site.css" />
+    <title>@ViewData["Title"] - DNC Complaints</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="~/js/Chart.min.js"></script>
     <script type="text/javascript" src="~/lib/chartjs-plugin-annotation-master/chartjs-plugin-annotation.min.js"></script>
     <script type="text/javascript" src="~/js/site.js"></script>
+    <style>
+        body {
+            font-family: "Lato", sans-serif
+        }
+
+        .mySlides {
+            display: none
+        }
+    </style>
 </head>
 <body>
     <nav>
-        <div class="nav-bar">
-            <a asp-area="" asp-controller="Home" asp-action="Index">Home </a><text> | </text>
-            <a asp-area="" asp-controller="Home" asp-action="Symbols">Symbols </a><text> | </text>
-            <a asp-area="" asp-controller="Home" asp-action="Chart">Chart </a><text> | </text>
-            <a asp-area="" asp-controller="Home" asp-action="Refresh">Refresh </a><text> | </text>
+        <div class="w3-top">
+            <div class="w3-bar w3-black w3-card">
+                <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+                <a asp-area="" asp-controller="Home" asp-action="Index">Home </a><text> | </text>
+
+                <a asp-area="" asp-controller="Home" asp-action="Chart">Chart </a><text> | </text>
+                <a asp-area="" asp-controller="Home" asp-action="Symbols">Symbols </a><text> | </text>
+                <a asp-area="" asp-controller="Home" asp-action="Refresh">Refresh </a><text> | </text>
+                <a asp-area="" asp-controller="Home" asp-action="AboutUS">About US </a><text> | </text>
+            </div>
         </div>
+
+
     </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>ISDS, Muma College of Business, University of South Florida</p>
+            <p>Muma College of Business, University of South Florida</p>
         </footer>
     </div>
     @RenderSection("Scripts", required: false)

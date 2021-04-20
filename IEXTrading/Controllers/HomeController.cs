@@ -36,7 +36,10 @@ namespace MVCTemplate.Controllers
         {
             return View();
         }
-
+        public IActionResult AboutUS()
+        {
+            return View();
+        }
         /****
          * The Symbols action calls the GetSymbols method that returns a list of Companies.
          * This list of Companies is passed to the Symbols View.
@@ -151,6 +154,7 @@ namespace MVCTemplate.Controllers
 
             return View("Chart", companiesEquities);
         }
+        //add about page
 
         /****
          * Deletes the records from tables.
