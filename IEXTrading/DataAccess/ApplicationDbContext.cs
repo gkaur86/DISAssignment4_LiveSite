@@ -14,5 +14,12 @@ namespace IEXTrading.DataAccess
 
         public DbSet<Company> Companies { get; set; }
         public DbSet<Equity> Equities { get; set; }
+
+        public DbSet<Companys> CompCompanies { get; set; }
+        public DbSet<customer> Customers { get; set; }
+        public DbSet<DoNotCallComplaints> Complaints { get; set; }
+
+        public DbSet<NoRoboComplaints> Robocalls { get; set; }
+
     }
 }

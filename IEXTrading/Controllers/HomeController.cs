@@ -11,12 +11,19 @@ using IEXTrading.DataAccess;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http;
+using System.Net.Http;
 
 namespace MVCTemplate.Controllers
 {
     
     public class HomeController : Controller
     {
+        HttpClient httpClient;
+        static string initial_json = "https://gurmeetk.com/DIS/datasmaller.json";
+
+        static string base_url = "";
+        static string AP_key = "";
+
         public ApplicationDbContext dbContext;
         private readonly AppSettings _appSettings;
         public const string SessionKeyName = "StockData";
@@ -26,6 +33,8 @@ namespace MVCTemplate.Controllers
             dbContext = context;
             _appSettings = appSettings.Value;
         }
+        
+       
 
         public IActionResult HelloIndex()
         {
@@ -34,6 +43,74 @@ namespace MVCTemplate.Controllers
         }
         public IActionResult Index()
         {
+            //dbContext.Mitigate();
+            httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(
+          new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+
+            string initialData = "";
+
+            //NoRoboComplaints Storehere = null;
+
+            httpClient.BaseAddress = new Uri(initial_json);
+
+            try
+            {
+                HttpResponseMessage response = httpClient.GetAsync(initial_json).GetAwaiter().GetResult();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    initialData = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                }
+
+                if(!initialData.Equals(""))
+                {
+                    //Console.WriteLine(initialData);
+                    Console.WriteLine("Starting");
+                    var Storehere = JsonConvert.DeserializeObject < List < desRobo >> (initialData);
+                    Console.WriteLine("I am here");
+                    Storehere.ForEach(p =>
+                    {
+                        dbContext.Database.EnsureCreated();
+                        Console.WriteLine("I am here too");
+                        var urlNameExists = dbContext.Robocalls.Any(x => x.id == p.id);
+                        Console.WriteLine("I am here three");
+                        if (!urlNameExists)
+                        {
+                            Console.WriteLine("I am here FOUR");
+                            NoRoboComplaints Newrecord = new NoRoboComplaints()
+                            {
+                                id = p.id,
+                                consumer_area_code = p.attributes.consumer_area_code,
+                                created_date = p.attributes.created_date,
+                                violation_date = p.attributes.violation_date,
+                                consumer_city = p.attributes.consumer_city,
+                                consumer_state = p.attributes.consumer_state,
+                                company_phone_number =  p.attributes.company_phone_number,
+                                subject = p.attributes.subject,
+                                Robocall = p.attributes.Robocall
+                            
+                            };
+                            dbContext.Robocalls.Add(Newrecord);
+                            dbContext.SaveChanges();
+
+                        }
+
+
+
+
+
+                    });
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
             return View();
         }
         public IActionResult AboutUS()
@@ -92,6 +169,13 @@ namespace MVCTemplate.Controllers
             return View(companiesEquities);
         }
 
+
+
+        public IActionResult Charted(string state)
+        {
+
+            return View();
+        }
         /****
          * The Refresh action calls the ClearTables method to delete records from a or all tables.
          * Count of current records for each table is passed to the Refresh View.

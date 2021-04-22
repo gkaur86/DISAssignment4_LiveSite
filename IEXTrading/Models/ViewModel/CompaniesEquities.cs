@@ -25,5 +25,13 @@ namespace IEXTrading.Models.ViewModel
             AvgPrice = avgprice;
             AvgVolume = avgvolume;
         }
+
+        public class coutedchart
+        {
+            public int Norobo;
+            public int yesrobo;
+            public string state; 
+
+        }
     }
 }
