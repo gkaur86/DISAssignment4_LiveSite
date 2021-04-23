@@ -1,0 +1,62 @@
+﻿@using IEXTrading.Models
+@{ ViewData["Title"] = "Maps"; }
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Map of US</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <script>
+
+
+        var states = @Html.Raw(ViewBag.State);
+        var numbs = @Html.Raw(ViewBag.Nums);
+        var test = @Html.Raw(ViewBag.test);
+
+
+        google.charts.load('current', {
+            'packages': ['geochart'],
+            // Note: you will need to get a mapsApiKey for your project.
+            // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+            'mapsApiKey': 'AIzaSyCUvEa3oaABgIGxtA3NTwpGKFd_SubWHzY'
+        });
+        google.charts.setOnLoadCallback(drawRegionsMap);
+
+    function drawRegionsMap() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'State');
+        data.addColumn('number', 'RoboCalls');
+        var result = [];
+
+        for (var i in test)
+            result.push([i, test[i]]);
+
+        data.addRows(result);
+
+
+        var options = {
+                region: 'US',
+                displayMode: 'regions',
+                resolution: 'provinces',
+            };
+
+            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+            chart.draw(data, options);
+        }
+
+    </script>
+</head>
+<body>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+        <h2 class="w3-wide">Map of USA</h2>
+        <div id="regions_div" style="width: 900px; height: 500px;"></div>
+        </div>
+
+
+</body>

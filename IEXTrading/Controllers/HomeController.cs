@@ -22,8 +22,8 @@ namespace MVCTemplate.Controllers
         HttpClient httpClient;
         static string initial_json = "https://gurmeetk.com/DIS/datasmaller.json";
 
-        static string base_url = "";
-        static string AP_key = "";
+        static string base_url = "https://api.ftc.gov/v0/dnc-complaints";
+        static string API_key = "YLWGrIx7VC8dRlxP9ASwfJz39pIw3DPNyIZ40jnG";
 
         public ApplicationDbContext dbContext;
         private readonly AppSettings _appSettings;
@@ -379,6 +379,29 @@ namespace MVCTemplate.Controllers
 
         }
 
+        public IActionResult map()
+        {
+            List<int> vals = new List<int>();
+            Dictionary<string, int> openWith = new Dictionary<string, int>();
+            var rob = dbContext.Robocalls.Select(x => x.consumer_state).Distinct();
+            foreach (var i in rob)
+            {
+                int it = dbContext.Robocalls.Count(x => x.consumer_state == i);
+                vals.Add(it);
+                if (i != null)
+                {
+                    openWith.Add(i, it);
+                }
+
+
+            }
+
+            ViewBag.State = Newtonsoft.Json.JsonConvert.SerializeObject(rob.ToList());
+            ViewBag.Nums = Newtonsoft.Json.JsonConvert.SerializeObject(vals.ToList());
+            ViewBag.test = Newtonsoft.Json.JsonConvert.SerializeObject(openWith);
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Charted(inputstate here)
         {
@@ -532,7 +555,89 @@ namespace MVCTemplate.Controllers
             }
             dbContext.SaveChanges();
         }
+        public IActionResult Refreshed()
+        {
+            inputstate newed = new inputstate();
+            //dbContext.Mitigate();
+            httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(
+          new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
+
+            string initialData = "";
+
+            //NoRoboComplaints Storehere = null;
+            string apicall = base_url + "?api_key=" + API_key;
+
+            httpClient.BaseAddress = new Uri(apicall);
+            int c = 0;
+            try
+            {
+                HttpResponseMessage response = httpClient.GetAsync(initial_json).GetAwaiter().GetResult();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    initialData = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                }
+
+              
+                if(!initialData.Equals(""))
+                {
+                    //Console.WriteLine(initialData);
+                  
+                    Console.WriteLine("Starting");
+                    var Storehere = JsonConvert.DeserializeObject < List < desRobo >> (initialData);
+                    Console.WriteLine("I am here");
+                    Storehere.ForEach(p =>
+                    {
+                        dbContext.Database.EnsureCreated();
+                        Console.WriteLine("I am here too");
+                        var urlNameExists = dbContext.Robocalls.Any(x => x.id == p.id);
+                        Console.WriteLine("I am here three");
+                        if (!urlNameExists)
+                        {
+                            c = c + 1;
+                            Console.WriteLine("I am here FOUR");
+                            NoRoboComplaints Newrecord = new NoRoboComplaints()
+                            {
+                                id = p.id,
+                                consumer_area_code = p.attributes.consumer_area_code,
+                                created_date = p.attributes.created_date,
+                                violation_date = p.attributes.violation_date,
+                                consumer_city = p.attributes.consumer_city,
+                                consumer_state = p.attributes.consumer_state,
+                                company_phone_number =  p.attributes.company_phone_number,
+                                subject = p.attributes.subject,
+                                Robocall = p.attributes.Robocall
+                            
+                            };
+                            dbContext.Robocalls.Add(Newrecord);
+                            dbContext.SaveChanges();
+                           
+                        }
+
+
+
+
+
+                    });
+                }
+                if (c == 0)
+                {
+                    c = 10;
+                }
+                string t = c.ToString();
+                newed.state = c.ToString();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return View(newed);
+        }
         /****
          * Returns the ViewModel CompaniesEquities based on the data provided.
          ****/
