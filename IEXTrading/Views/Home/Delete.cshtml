@@ -1,0 +1,40 @@
+﻿@using IEXTrading.Models
+@{ ViewData["Title"] = "Delete"; }
+
+@model NoRoboComplaints
+
+
+<h2>Delete Record</h2>
+<hr />
+@if (@Model.id == "0")
+{
+<div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="bansdad">
+    <h2 class="w3-wide">Delete Records</h2>
+    <p class="w3-justify">Enter Complainy ID to delete</p>
+    <p class="w3-justify"> Examples: </p>
+    <p class="w3-justify">
+        7b69656dc3e5201b4b7052513b003323
+    </p>
+    <p class="w3-justify">7b69656dc3e5201b4b7052513b00634f</p>
+
+    <form asp-controller="Home" asp-action="Delete" method="post">
+        <p>ID: <input asp-for="id" /></p>
+
+        <button type="submit">Submit</button>
+    </form>
+</div> }
+else
+{
+<div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="bandddde">
+    <h2 class="w3-wide">Record Deleted</h2>
+    <p class="w3-justify"> ID: @Model.id</p>
+    <p class="w3-justify"> Company Phone Numner: @Model.company_phone_number</p>
+    <p class="w3-justify"> Violation Date: @Model.violation_date</p>
+    <p class="w3-justify"> Creation Date: @Model.created_date</p>
+    <p class="w3-justify"> Consumer Area Code: @Model.consumer_area_code</p>
+    <p class="w3-justify"> Consumer State: @Model.consumer_state</p>
+    <p class="w3-justify"> Subject: @Model.subject</p>
+    <p class="w3-justify"> Is is a RoboCall?: @Model.Robocall</p>
+
+</div>
+}

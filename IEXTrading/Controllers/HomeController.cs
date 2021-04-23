@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
+using System.Text;
 
 namespace MVCTemplate.Controllers
 {
@@ -65,7 +66,7 @@ namespace MVCTemplate.Controllers
                     initialData = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
                 }
-
+                /***
                 if(!initialData.Equals(""))
                 {
                     //Console.WriteLine(initialData);
@@ -104,9 +105,9 @@ namespace MVCTemplate.Controllers
 
 
                     });
-                }
+                }***/
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -176,6 +177,178 @@ namespace MVCTemplate.Controllers
 
             return View();
         }
+
+        public IActionResult Viewed()
+        {
+
+            NoRoboComplaints Newrecord = new NoRoboComplaints();
+            Newrecord.id = "0";
+            return View(Newrecord);
+
+        }
+
+        [HttpPost]
+        public IActionResult Viewed(NoRoboComplaints nerec)
+        {
+            var urlNameExists = dbContext.Robocalls.Any(x => x.id == nerec.id);
+            NoRoboComplaints Newrecord = new NoRoboComplaints();
+            if (urlNameExists) { 
+             Newrecord = dbContext.Robocalls.Where(x => x.id == nerec.id).Select(x=> new NoRoboComplaints()
+            {
+                id = x.id,
+                company_phone_number = x.company_phone_number,
+                violation_date = x.violation_date,
+                created_date = x.created_date,
+                consumer_area_code = x.consumer_area_code,
+                consumer_city = x.consumer_city,
+                consumer_state = x.consumer_state, 
+                subject = x.subject,
+                Robocall = x.Robocall
+
+
+            }).SingleOrDefault();
+            }
+            else { Newrecord.id = "1"; }
+            return View(Newrecord);
+
+        }
+        // Generates a random string with a given size.    
+        public string RandomString(int size, bool lowerCase = true)
+        {
+            var builder = new StringBuilder(size);
+
+            // Unicode/ASCII Letters are divided into two blocks
+            // (Letters 65–90 / 97–122):
+            // The first group containing the uppercase letters and
+            // the second group containing the lowercase.  
+
+            // char is a single Unicode character  
+            char offset = lowerCase ? 'a' : 'A';
+            const int lettersOffset = 26; // A...Z or a..z: length=26  
+            Random _random = new Random();
+            for (var i = 0; i < size; i++)
+            {
+                var @char = (char)_random.Next(offset, offset + lettersOffset);
+                builder.Append(@char);
+            }
+
+            return lowerCase ? builder.ToString().ToLower() : builder.ToString();
+        }
+        public IActionResult Created()
+        {
+            string newID;
+            while (true)
+            {
+                
+                newID = RandomString(7);
+                var urlNameExists = dbContext.Robocalls.Any(x => x.id == newID);
+                if (!urlNameExists)
+                {
+                    break;
+                }
+
+            }
+            NoRoboComplaints Newrecord = new NoRoboComplaints();
+            Newrecord.id = newID;
+            DateTime here = DateTime.Now;
+            Newrecord.created_date = here;
+            Newrecord.violation_date = here;
+            Newrecord.consumer_city = null;
+            return View(Newrecord);
+        }
+
+
+        [HttpPost]
+        public IActionResult Created(NoRoboComplaints nerec)
+        {
+            dbContext.Database.EnsureCreated();
+            dbContext.Robocalls.Add(nerec);
+            dbContext.SaveChanges();
+            return View(nerec);
+        }
+
+        public IActionResult Delete()
+        {
+            NoRoboComplaints Newrecord = new NoRoboComplaints();
+            Newrecord.id = "0";
+            return View(Newrecord);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(NoRoboComplaints delreco)
+        {
+            NoRoboComplaints delrec = dbContext.Robocalls.Single(x => x.id == delreco.id);
+            dbContext.Robocalls.Remove(delrec);
+            dbContext.SaveChanges();
+            return View(delrec);
+        }
+
+        public IActionResult Update()
+        {
+            NoRoboComplaints Newrecord = new NoRoboComplaints();
+            Newrecord.id = "0";
+            Newrecord.consumer_area_code = "None";
+            return View(Newrecord);
+        }
+
+        [HttpPost]
+        public IActionResult Update(NoRoboComplaints uprec)
+        {
+            Console.WriteLine("I am here");
+            Console.WriteLine(uprec.consumer_area_code);
+            if(uprec.consumer_area_code == null)
+            {
+                uprec.consumer_area_code = "";
+            }
+            var urlNameExists = dbContext.Robocalls.Any(x => x.id == uprec.id);
+            NoRoboComplaints updaterec = new NoRoboComplaints();
+            if (urlNameExists)
+            {
+                if (uprec.consumer_area_code == "")
+                {
+                    updaterec = dbContext.Robocalls.Where(x => x.id == uprec.id).Select(x => new NoRoboComplaints()
+                    {
+                        id = x.id,
+                        company_phone_number = x.company_phone_number,
+                        violation_date = x.violation_date,
+                        created_date = x.created_date,
+                        consumer_area_code = x.consumer_area_code,
+                        consumer_city = x.consumer_city,
+                        consumer_state = x.consumer_state,
+                        subject = x.subject,
+                        Robocall = x.Robocall
+
+
+                    }).SingleOrDefault();
+                }
+                else
+                {
+                     updaterec = dbContext.Robocalls.FirstOrDefault(x => x.id == uprec.id);
+                }
+                if (uprec.consumer_area_code != "")
+                {
+                    Console.WriteLine("here");
+                    updaterec.company_phone_number = uprec.company_phone_number;
+                    updaterec.violation_date = uprec.violation_date;
+                    updaterec.created_date = uprec.created_date;
+                    updaterec.consumer_area_code = uprec.consumer_area_code;
+                    updaterec.consumer_city = uprec.consumer_city;
+                    updaterec.consumer_state = uprec.consumer_state;
+                    updaterec.subject = uprec.subject;
+                    updaterec.Robocall = uprec.Robocall;
+                    dbContext.SaveChanges();
+                }
+
+            }
+            else
+            {
+                updaterec.id = "1";
+                updaterec.consumer_area_code = "Not";
+            }
+
+            return View(updaterec);
+        }
+
         /****
          * The Refresh action calls the ClearTables method to delete records from a or all tables.
          * Count of current records for each table is passed to the Refresh View.

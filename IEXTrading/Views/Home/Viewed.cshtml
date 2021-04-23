@@ -1,0 +1,60 @@
+﻿@using IEXTrading.Models
+@{ ViewData["Title"] = "Viewed"; }
+
+@model NoRoboComplaints
+
+
+<h2>View Record</h2>
+<hr />
+<div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+    <h2 class="w3-wide">Search for Records</h2>
+    <p class="w3-justify">Enter Complainy ID to view</p>
+    <p class="w3-justify"> Examples: </p>
+    <p class="w3-justify">
+        2979a77309ee8087ab666fc664be16e6
+    </p>
+    <p class="w3-justify">7b69656dc3e5201b4b7052513b0009ff</p>
+
+
+    <form asp-controller="Home" asp-action="Viewed" method="post">
+        <p>ID: <input asp-for="id" /></p>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<!---
+                id = x.id,
+                company_phone_number = x.company_phone_number,
+                violation_date = x.violation_date,
+                created_date = x.created_date,
+                consumer_area_code = x.consumer_area_code,
+                consumer_city = x.consumer_city,
+                consumer_state = x.consumer_state,
+                subject = x.subject,
+                Robocall = x.Robocall
+
+-->
+
+@if (@Model.id != "0" && @Model.id != "1")
+{
+<div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="bande">
+    <p class="w3-justify"> ID: @Model.id</p>
+    <p class="w3-justify"> Company Phone Numner: @Model.company_phone_number</p>
+    <p class="w3-justify"> Violation Date: @Model.violation_date</p>
+    <p class="w3-justify"> Creation Date: @Model.created_date</p>
+    <p class="w3-justify"> Consumer Area Code: @Model.consumer_area_code</p>
+    <p class="w3-justify"> Consumer State: @Model.consumer_state</p>
+    <p class="w3-justify"> Subject: @Model.subject</p>
+    <p class="w3-justify"> Is is a RoboCall?: @Model.Robocall</p>
+
+</div>}
+
+@if (Model.id == "1")
+{
+<div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="bandt">
+
+    <p class="w3-justify"> Complaint ID does not Exist</p>
+</div>
+        }
+

@@ -1,0 +1,139 @@
+﻿@using IEXTrading.Models
+@{ ViewData["Title"] = "Created"; }
+
+@model NoRoboComplaints
+
+<h2>Create Record</h2>
+<hr />
+
+<!---
+                id = x.id,
+                company_phone_number = x.company_phone_number,
+                violation_date = x.violation_date,
+                created_date = x.created_date,
+                consumer_area_code = x.consumer_area_code,
+                consumer_city = x.consumer_city,
+                consumer_state = x.consumer_state,
+                subject = x.subject,
+                Robocall = x.Robocall
+
+-->
+
+@if (@Model.consumer_city == null && Model.id != null)
+{
+<div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+    <h2 class="w3-wide">Create Records</h2>
+    <p class="w3-justify">Enter Details of the Complaint (ID auto generated)</p>
+
+
+    <form asp-controller="Home" asp-action="Created" method="post">
+        <p>Company Phone Number: <input asp-for="company_phone_number" /></p>
+        <p>Violation Date: <input asp-for="violation_date" /></p>
+        <p>Creation Date: <input asp-for="created_date" /></p>
+        <p>
+            Consumer City: <input asp-for="consumer_city" />
+        </p>
+        <p>
+            Consumer Area Code: <input asp-for="consumer_area_code" />
+        </p>
+        <p>
+            Consumer State: <select asp-for="consumer_state">
+                <option value="">Select State</option>
+                <option value="Alabama">Alabama</option>
+                <option value="Alaska">Alaska</option>
+                <option value="Arizona">Arizona</option>
+                <option value="Arkansas">Arkansas</option>
+                <option value="California">California</option>
+                <option value="Colorado">Colorado</option>
+                <option value="Connecticut">Connecticut</option>
+                <option value="Delaware">Delaware</option>
+                <option value="District of Columbia">District of Columbia</option>
+                <option value="Florida">Florida</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Hawaii">Hawaii</option>
+                <option value="Idaho">Idaho</option>
+                <option value="Illinois">Illinois</option>
+                <option value="Indiana">Indiana</option>
+                <option value="Iowa">Iowa</option>
+                <option value="Kansas">Kansas</option>
+                <option value="Kentucky">Kentucky</option>
+                <option value="Louisiana">Louisiana</option>
+                <option value="Maine">Maine</option>
+                <option value="Maryland">Maryland</option>
+                <option value="Massachusetts">Massachusetts</option>
+                <option value="Michigan">Michigan</option>
+                <option value="Minnesota">Minnesota</option>
+                <option value="Mississippi">Mississippi</option>
+                <option value="Missouri">Missouri</option>
+                <option value="Montana">Montana</option>
+                <option value="Nebraska">Nebraska</option>
+                <option value="Nevada">Nevada</option>
+                <option value="New Hampshire">New Hampshire</option>
+                <option value="New Jersey">New Jersey</option>
+                <option value="New Mexico">New Mexico</option>
+                <option value="New York">New York</option>
+                <option value="North Carolina">North Carolina</option>
+                <option value="North Dakota">North Dakota</option>
+                <option value="Ohio">Ohio</option>
+                <option value="Oklahoma">Oklahoma</option>
+                <option value="Oregon">Oregon</option>
+                <option value="Pennsylvania">Pennsylvania</option>
+                <option value="Puerto Rico">Puerto Rico</option>
+                <option value="Rhode Island">Rhode Island</option>
+                <option value="South Carolina">South Carolina</option>
+                <option value="South Dakota">South Dakota</option>
+                <option value="Tennessee">Tennessee</option>
+                <option value="Texas">Texas</option>
+                <option value="Utah">Utah</option>
+                <option value="Vermont">Vermonte</option>
+                <option value="Virginia">Virginia</option>
+                <option value="Washington">Washington</option>
+                <option value="West Virginia">West Virginia</option>
+                <option value="Wisconsin">Wisconsin</option>
+                <option value="Wyoming">Wyoming</option>
+
+            </select>
+        </p>
+
+
+        <p>
+            Subject:<select asp-for="subject">
+
+                <option value="Calls pretending to be government, businesses, or family and friends">Calls pretending to be government, businesses, or family and friends</option>
+                <option value="Work from home  & other ways to make money">Work from home  & other ways to make money</option>
+                <option value="Reducing your debt (credit cards, mortgage, student loans)">Reducing your debt (credit cards, mortgage, student loans)</option>
+                <option value="Home security  & alarms">Home security  & alarms</option>
+                <option value="Lotteries, prizes  & sweepstakes">Lotteries, prizes  & sweepstakes</option>
+                <option value="Medical  & prescriptions">Medical  & prescriptions</option>
+                <option value="Warranties  & protection plans">Warranties  & protection plans</option>
+                <option value="Computer  & technical support">Computer  & technical support</option>
+                <option value="Energy, solar,  & utilities">Energy, solar,  & utilities</option>
+                <option value="Charities">Charities</option>
+                <option value="Home improvement  & cleaning">Home improvement  & cleaning</option>
+                <option value="Vacation  & timeshares">Vacation  & timeshares</option>
+                <option value="Other">Other</option>
+                <option value="No Subject Provided">No Subject Provided</option>
+                <option value="Dropped call or no message">Dropped call or no message</option>
+
+            </select>
+        </p>
+        <p>
+            Robo Call: <select asp-for="Robocall">
+                <option value=""> </option>
+                <option value="Y">Yes</option>
+                <option value="N">No</option>
+            </select>
+        </p>
+        <button type="submit">Submit</button>
+    </form>
+</div> 
+}
+            else
+            {
+<div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+    <h2 class="w3-wide">Record Created</h2>
+    <p class="w3-centered"> Your Complaint ID: <b>@Model.id</b> </p>
+
+</div>
+
+                    }
