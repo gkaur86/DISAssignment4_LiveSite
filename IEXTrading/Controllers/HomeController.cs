@@ -172,11 +172,7 @@ namespace MVCTemplate.Controllers
 
 
 
-        public IActionResult Charted(string state)
-        {
-
-            return View();
-        }
+ 
 
         public IActionResult Viewed()
         {
@@ -348,6 +344,105 @@ namespace MVCTemplate.Controllers
 
             return View(updaterec);
         }
+
+        public IActionResult Charted()
+        {
+            inputstate here = new inputstate();
+            here.state = "USA";
+            List<int> vals = new List<int>();
+            var rob = dbContext.Robocalls.Select(x => x.Robocall).Distinct();
+
+            foreach(var i in rob)
+            {
+                vals.Add(dbContext.Robocalls.Count(x => x.Robocall == i));
+
+            }
+
+            var val = vals;
+            ViewBag.ROBO = Newtonsoft.Json.JsonConvert.SerializeObject(rob.ToList());
+            ViewBag.VAL = Newtonsoft.Json.JsonConvert.SerializeObject(vals.ToList());
+
+
+
+            List<int> Typeval = new List<int>();
+            var typeun = dbContext.Robocalls.Select(x => x.subject ).Distinct();
+
+            foreach(var t in typeun)
+            {
+                Typeval.Add(dbContext.Robocalls.Count(x => x.subject == t));
+            }
+
+            ViewBag.SUB = Newtonsoft.Json.JsonConvert.SerializeObject(typeun.ToList());
+            ViewBag.NUMS = Newtonsoft.Json.JsonConvert.SerializeObject(Typeval.ToList());
+
+            return View(here);
+
+        }
+
+        [HttpPost]
+        public IActionResult Charted(inputstate here)
+        {
+
+            List<int> vals = new List<int>();
+            if (here.state == "USA")
+            {
+                var rob = dbContext.Robocalls.Select(x => x.Robocall).Distinct();
+
+                foreach (var i in rob)
+                {
+                    vals.Add(dbContext.Robocalls.Count(x => x.Robocall == i));
+
+                }
+
+                var val = vals;
+                ViewBag.ROBO = Newtonsoft.Json.JsonConvert.SerializeObject(rob.ToList());
+                ViewBag.VAL = Newtonsoft.Json.JsonConvert.SerializeObject(vals.ToList());
+
+
+
+                List<int> Typeval = new List<int>();
+                var typeun = dbContext.Robocalls.Select(x => x.subject).Distinct();
+
+                foreach (var t in typeun)
+                {
+                    Typeval.Add(dbContext.Robocalls.Count(x => x.subject == t));
+                }
+
+                ViewBag.SUB = Newtonsoft.Json.JsonConvert.SerializeObject(typeun.ToList());
+                ViewBag.NUMS = Newtonsoft.Json.JsonConvert.SerializeObject(Typeval.ToList());
+            }
+            else
+            {
+                var rob = dbContext.Robocalls.Where(x => x.consumer_state == here.state).Select(x => x.Robocall).Distinct();
+
+                foreach (var i in rob)
+                {
+                    vals.Add(dbContext.Robocalls.Where(x => x.consumer_state == here.state).Count(x => x.Robocall == i));
+
+                }
+
+                var val = vals;
+                ViewBag.ROBO = Newtonsoft.Json.JsonConvert.SerializeObject(rob.ToList());
+                ViewBag.VAL = Newtonsoft.Json.JsonConvert.SerializeObject(vals.ToList());
+
+
+
+                List<int> Typeval = new List<int>();
+                var typeun = dbContext.Robocalls.Where(x => x.consumer_state == here.state).Select(x => x.subject).Distinct();
+
+                foreach (var t in typeun)
+                {
+                    Typeval.Add(dbContext.Robocalls.Where(x => x.consumer_state == here.state).Count(x => x.subject == t));
+                }
+
+                ViewBag.SUB = Newtonsoft.Json.JsonConvert.SerializeObject(typeun.ToList());
+                ViewBag.NUMS = Newtonsoft.Json.JsonConvert.SerializeObject(Typeval.ToList());
+            }
+
+            return View(here);
+
+        }
+
 
         /****
          * The Refresh action calls the ClearTables method to delete records from a or all tables.

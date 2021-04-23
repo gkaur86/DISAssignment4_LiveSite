@@ -85,6 +85,11 @@ namespace IEXTrading.Models
         public string Robocall { get; set; }
     }
 
+
+public class inputstate
+    {
+        public string state { get; set; }
+    }
     public class link
     {
         public string self { get; set; }
