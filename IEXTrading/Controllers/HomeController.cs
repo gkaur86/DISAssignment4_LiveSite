@@ -49,7 +49,7 @@ namespace MVCTemplate.Controllers
         }
         public IActionResult Index()
         {
-          //  /***
+            /***
             //dbContext.Mitigate();
             httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Clear();
