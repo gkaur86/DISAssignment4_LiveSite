@@ -21,6 +21,11 @@ namespace MVCTemplate.Controllers
     {
         HttpClient httpClient;
         static string initial_json = "https://gurmeetk.com/DIS/datasmaller.json";
+        /**
+         * Full 147500 records are in data.json
+         * datasmaller.json contains only 2000 record (used for testing)
+         * datasmall.json contains 6000 records
+         */
 
         static string base_url = "https://api.ftc.gov/v0/dnc-complaints";
         static string API_key = "YLWGrIx7VC8dRlxP9ASwfJz39pIw3DPNyIZ40jnG";
@@ -44,6 +49,7 @@ namespace MVCTemplate.Controllers
         }
         public IActionResult Index()
         {
+          //  /***
             //dbContext.Mitigate();
             httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Clear();
@@ -56,7 +62,7 @@ namespace MVCTemplate.Controllers
             //NoRoboComplaints Storehere = null;
 
             httpClient.BaseAddress = new Uri(initial_json);
-
+           
             try
             {
                 HttpResponseMessage response = httpClient.GetAsync(initial_json).GetAwaiter().GetResult();
@@ -66,10 +72,10 @@ namespace MVCTemplate.Controllers
                     initialData = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
                 }
-                /***
+                
                 if(!initialData.Equals(""))
                 {
-                    //Console.WriteLine(initialData);
+                    Console.WriteLine(initialData);
                     Console.WriteLine("Starting");
                     var Storehere = JsonConvert.DeserializeObject < List < desRobo >> (initialData);
                     Console.WriteLine("I am here");
@@ -105,13 +111,14 @@ namespace MVCTemplate.Controllers
 
 
                     });
-                }***/
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-
+            
+           // **/
             return View();
         }
         public IActionResult AboutUS()

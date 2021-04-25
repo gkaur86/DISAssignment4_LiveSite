@@ -16,7 +16,7 @@
             <p>Gurmeet Kaur</p>
             <p>gurmeetkaur@usf.edu</p>
             <img src="img/gurmeet.jpeg" class="w3-round w3-margin-bottom" alt="Gurmeet Kaur" style="width:60%" height="200px">
-            <p> Gurmeet was responsible for the idea for the assignment, creating infrastructure code, finding the data for the assignment and creating the dummy CRUD call</p>
+            <p> Gurmeet was responsible for infrastructure code, database creation and API calls.</p>
 
 
             <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">GIT LOG</button>
@@ -26,7 +26,7 @@
             <p>Andres Herrera</p>
             <p>andresh@usf.edu</p>
             <img src="img/and.jpeg" class="w3-round w3-margin-bottom" alt="Andres Herrera" style="width:60%" height="200px">
-            <p>Andres was resposible for the CSS and making the site responsive so that it can be seen on screen of any size</p>
+            <p>Andres was resposible for the CRUD functionalities.</p>
 
             <button onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-black">GIT LOG</button>
         </div>
@@ -34,7 +34,7 @@
             <p>Zoe Day</p>
             <p>zmday@usf.edu</p>
             <img src="img/zoe.jpeg" class="w3-round w3-margin-bottom" alt="Zoe Day" style="width:60%" height="200px">
-            <p>Zoe was responsible for making the visuzalization responsive and creating the database model</p>
+            <p>Zoe was responsible for making the Visualizations.</p>
 
             <button onclick="document.getElementById('id03').style.display='block'" class="w3-button w3-black">GIT LOG</button>
         </div>
@@ -69,94 +69,94 @@
         </div>
     </div>
     <!--
-      <div class="header">
-        <h1>ABOUT US</h1>
-        <p>We are Business Analytics and Information Systems graduate students at the University of South Florida, </p>
-      </div>
-
-
-    <h2 style="text-align:center">Meet Our Team</h2>
-      <div class="row">
-       <div class="column">
-        <div class="card">
-          <img src="img/gurmeet.jpeg" class="profile-pic"width="150px" height="150px">
-           <div class="container">
-            <div class="profile-details">
-            <h2>Gurmeet Kaur</h2>
-
-            <p>Gurmeet Kaur did the infrastrucutre code </p>
-             <p>gurmeetkaur@usf.edu</p>
-         </div>
+          <div class="header">
+            <h1>ABOUT US</h1>
+            <p>We are Business Analytics and Information Systems graduate students at the University of South Florida, </p>
           </div>
-         </div>
-        </div>
 
 
-      <div class="column">
-        <div class="card">
-          <img src="img/and.jpeg"class="profile-pic"width="150px" height="150px">
-          <div class="container">
-          <div class = "profile-details">
-      <h2>Andreas </h2>
-         <p>Andreas .... </p>
-              <p>andresh@usf.edu</p>
+        <h2 style="text-align:center">Meet Our Team</h2>
+          <div class="row">
+           <div class="column">
+            <div class="card">
+              <img src="img/gurmeet.jpeg" class="profile-pic"width="150px" height="150px">
+               <div class="container">
+                <div class="profile-details">
+                <h2>Gurmeet Kaur</h2>
+
+                <p>Gurmeet Kaur did the infrastrucutre code </p>
+                 <p>gurmeetkaur@usf.edu</p>
+             </div>
+              </div>
+             </div>
             </div>
 
-         </div>
-        </div>
-       </div>
 
+          <div class="column">
+            <div class="card">
+              <img src="img/and.jpeg"class="profile-pic"width="150px" height="150px">
+              <div class="container">
+              <div class = "profile-details">
+          <h2>Andreas </h2>
+             <p>Andreas .... </p>
+                  <p>andresh@usf.edu</p>
+                </div>
 
-      <div class="column">
-        <div class="card">
-          <img src="img/zoe.jpeg" class ="profile-pic"width="150px" height="150px">
-           <div class="container">
-            <div class = "profile-details">
-             <h2>Zoe Day</h2>
-              <p>Zoe ... </p>
-              <p>zmday@usf.edu</p>
+             </div>
             </div>
-
-          </div>
-         </div>
-        </div>
-       </div>
-
-    -->
-    <h2 class="w3-wide">Database Model</h2>
-    <img src="img/ERD2.png" class="w3-image w3-greyscale-min" style="width:80%">
-</div>
-</div>
-<script>
+           </div>
 
 
-    // Used to toggle the menu on small screens when clicking on the menu button
-    function myFunction() {
-        var x = document.getElementById("navDemo");
-        if (x.className.indexOf("w3-show") == -1) {
-            x.className += " w3-show";
-        } else {
-            x.className = x.className.replace(" w3-show", "");
+          <div class="column">
+            <div class="card">
+              <img src="img/zoe.jpeg" class ="profile-pic"width="150px" height="150px">
+               <div class="container">
+                <div class = "profile-details">
+                 <h2>Zoe Day</h2>
+                  <p>Zoe ... </p>
+                  <p>zmday@usf.edu</p>
+                </div>
+
+              </div>
+             </div>
+            </div>
+           </div>
+
+
+        <h2 class="w3-wide">Database Model</h2>
+        <img src="img/ERD2.png" class="w3-image w3-greyscale-min" style="width:80%">
+    </div>
+    </div>
+              -->
+    <script>
+
+        // Used to toggle the menu on small screens when clicking on the menu button
+        function myFunction() {
+            var x = document.getElementById("navDemo");
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+            }
         }
-    }
-    var modal = document.getElementById('id01');
-    var modall = document.getElementById('id02');
-    var modalr = document.getElementById('id03');
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        var modal = document.getElementById('id01');
+        var modall = document.getElementById('id02');
+        var modalr = document.getElementById('id03');
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
 
+            }
+            if (event.target == modall) {
+                modall.style.display = "none";
+            }
+
+            if (event.target == modalr) {
+                modalr.style.display = "none";
+            }
         }
-        if (event.target == modall) {
-            modall.style.display = "none";
-        }
-
-        if (event.target == modalr) {
-            modalr.style.display = "none";
-        }
-    }
 
 
 
-</script>
+    </script>
